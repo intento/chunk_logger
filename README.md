@@ -4,6 +4,13 @@
 
 SafeTimedChunksFileHandler is concurrent safe FileHandler that splits logs into N-minute chunks. It  also creates a directories in path if they are missing. Used some code from [safe_logger](https://github.com/cybergrind/safe_logger)
 
+## Install
+
+```bash
+
+pip3 install chunk_logger
+
+```
 
 ## Usage
 
