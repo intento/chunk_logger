@@ -53,6 +53,7 @@ class SafeTimedChunksFileHandler(logging.handlers.BaseRotatingHandler):
             self.suffix, timeTuple)
         return open(newFilename, self.mode, encoding=self.encoding)
 
+    # https://github.com/cybergrind/safe_logger/blob/master/safe_logger/__init__.py#L12
     def _open(self):
         """
         Wrap open_with_dt() with lock
@@ -68,6 +69,7 @@ class SafeTimedChunksFileHandler(logging.handlers.BaseRotatingHandler):
             finally:
                 self._release_lock()
 
+    # https://github.com/python/cpython/blob/3.7/Lib/logging/handlers.py#L328
     def shouldRollover(self, record):
         """
         Determine if rollover should occur
@@ -96,6 +98,7 @@ class SafeTimedChunksFileHandler(logging.handlers.BaseRotatingHandler):
         resultDT += timedelta(minutes=self.minutesInterval)
         return int(resultDT.timestamp())
 
+    # https://github.com/python/cpython/blob/3.7/Lib/logging/handlers.py#L340
     def getFilesToDelete(self):
         """
         Determine the files to delete when rolling over
@@ -117,6 +120,7 @@ class SafeTimedChunksFileHandler(logging.handlers.BaseRotatingHandler):
             result = result[:len(result) - self.oldCount]
         return result
 
+    # https://github.com/cybergrind/safe_logger/blob/master/safe_logger/__init__.py#L39
     def doRollover(self):
         """
         Do a rollover. Create new file, remove obsolete files
@@ -148,6 +152,7 @@ class SafeTimedChunksFileHandler(logging.handlers.BaseRotatingHandler):
         self.rolloverAt = newRolloverAt
         self._release_lock()
 
+    # https://github.com/cybergrind/safe_logger/blob/master/safe_logger/__init__.py#L24
     def _aquire_lock(self):
         try:
             self._lockf = open(self.baseFilename + '_lock', 'a')
@@ -156,6 +161,7 @@ class SafeTimedChunksFileHandler(logging.handlers.BaseRotatingHandler):
             self._lockf = open(name, 'a')
         fcntl.flock(self._lockf, fcntl.LOCK_EX | fcntl.LOCK_NB)
 
+    # https://github.com/cybergrind/safe_logger/blob/master/safe_logger/__init__.py#L32
     def _release_lock(self):
         self._lockf.close()
 
